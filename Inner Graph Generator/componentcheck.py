@@ -1,21 +1,18 @@
 import networkx as nx
-from NESW import num_cips
+from cipcalc import num_cips
 
 
 def cip_rule_filter(graph_list):
     """
     Given List of Graphs
     Returns filtered list that satisfy the CIP rule
-
-    CIP Rule = 2 CIP on outer biconnected components
-                no CIP on inner biconnected components
-                Less than 4 CIPs
     """
     filtered_graphs = []
     for graph in graph_list:
         if cip_rule_check(graph):
             filtered_graphs.append(graph)
     return filtered_graphs
+
 
 
 def cip_rule_check(graph):
@@ -25,6 +22,7 @@ def cip_rule_check(graph):
 
     CIP Rule = 2 CIP on outer biconnected components and no CIP on
     inner biconnected components
+    Less than 4 CIPs
     """
     a = 0
     # print(f'reach {a}')
@@ -61,6 +59,7 @@ def component_break(given_graph):
     Given a graph,
     returns [list of the 2 outer components(1 articulation point) with 2cip],
     [list of other inner components(2 articulation points) with 0 cip]
+    Runtime: O(n) = DFS and keeping-depth&lowpoint
     """
     test_graph = given_graph.copy()
     cutvertices = list(nx.articulation_points(test_graph))
@@ -137,6 +136,5 @@ def complex_triangle_check(graph):
                 # print(2*len(comp))
                 # print(len(outer_vertices))
                 # print(len(all_triangles))
-                
                 return False
     return True
